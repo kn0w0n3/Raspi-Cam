@@ -2,14 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QCamera>
-#include <QCameraInfo>
-#include <QCameraViewfinder>
-#include <QCameraImageCapture>
-#include <QMediaRecorder>
-#include <QVideoEncoderSettings>
-#include <QUrl>
-#include <QDebug>
+#include "opencv2/opencv.hpp"
+#include <QGraphicsScene>
+#include "recordthread.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,14 +19,18 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
+
+    void openCamera();
+    void updateFrame(cv::Mat*);
 
 private:
     Ui::MainWindow *ui;
-    QCamera *camera;
-    QCameraViewfinder *viewFinder;
-    QCameraImageCapture *imageCapture;
-    QMediaRecorder *recorder;
+    QGraphicsScene *scene;
+    cv::Mat currentFrame;
+
+    // for capture thread
+    QMutex *data_lock;
+    RecordThread *capturer;
 };
 
 #endif // MAINWINDOW_H

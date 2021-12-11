@@ -1,14 +1,27 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2021-12-05T09:04:57
+# Project created by QtCreator 2021-12-10T17:44:39
 #
 #-------------------------------------------------
 
-QT       += core gui
-QT       += multimedia
-QT       += multimediawidgets
+QT       += core gui multimedia network concurrent
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+unix: !mac {
+    INCLUDEPATH += /home/kdr2/programs/opencv/include/opencv4
+    LIBS += -L/home/kdr2/programs/opencv/lib -lopencv_core -lopencv_imgproc -lopencv_imgcodecs -lopencv_video -lopencv_videoio
+}
+
+unix: mac {
+    INCLUDEPATH += /path/to/opencv/include/opencv4
+    LIBS += -L/path/to/opencv/lib -lopencv_world
+}
+
+win32 {
+    INCLUDEPATH += c:/path/to/opencv/include/opencv4
+    LIBS += -lc:/path/to/opencv/lib/opencv_world
+}
 
 TARGET = Raspi-Cam
 TEMPLATE = app
@@ -28,10 +41,14 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    recordthread.cpp \
+    utilities.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    recordthread.h \
+    utilities.h
 
 FORMS += \
         mainwindow.ui
@@ -40,3 +57,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    images.qrc
