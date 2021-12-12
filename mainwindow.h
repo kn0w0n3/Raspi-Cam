@@ -23,6 +23,10 @@ private slots:
     void openCamera();
     void updateFrame(cv::Mat*);
 
+
+
+    void on_recordButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
@@ -31,6 +35,7 @@ private:
     // for capture thread
     QMutex *data_lock;
     RecordThread *capturer;
+    bool isRecording = false;
 };
 
 #endif // MAINWINDOW_H

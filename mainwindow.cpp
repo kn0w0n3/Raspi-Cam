@@ -36,6 +36,8 @@ void MainWindow::openCamera(){
     //connect(capturer, &RecordThread::fpsChanged, this, &MainWindow::updateFPS);
     //connect(capturer, &RecordThread::videoSaved, this, &MainWindow::appendSavedVideo);
     capturer->start();
+    //capturer->setVideoSavingStatus(RecordThread::STARTING);
+    //capturer->setRunning(true);
     //mainStatusLabel->setText(QString("Capturing Camera %1").arg(camID));
     //monitorCheckBox->setCheckState(Qt::Unchecked);
     //recordButton->setText("Record");
@@ -61,4 +63,21 @@ void MainWindow::updateFrame(cv::Mat *mat){
     scene->update();
     scene->setSceneRect(image.rect());
 
+}
+
+void MainWindow::on_recordButton_clicked(){
+    if(isRecording == false){
+        isRecording = true;
+        ui->recordButton->setText("Stop");
+        capturer->setVideoSavingStatus(RecordThread::STARTING);
+        capturer->setRunning(true);
+    }
+    else if(isRecording == true){
+        isRecording = false;
+        ui->recordButton->setText("Record");
+        capturer->setVideoSavingStatus(RecordThread::STOPPING);
+        capturer->setRunning(false);
+        //delete capturer;
+        openCamera();
+    }
 }

@@ -1,4 +1,4 @@
-#include "recordthread.h"
+ #include "recordthread.h"
 
 
 RecordThread::RecordThread(int camera, QMutex *lock): running(false), cameraID(camera), videoPath(""), data_lock(lock){
