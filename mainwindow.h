@@ -19,12 +19,8 @@ public:
     ~MainWindow();
 
 private slots:
-
     void openCamera();
     void updateFrame(cv::Mat*);
-
-
-
     void on_recordButton_clicked();
 
 private:

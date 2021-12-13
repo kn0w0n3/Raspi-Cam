@@ -36,7 +36,7 @@ protected:
 
 signals:
     void frameCaptured(cv::Mat *data);
-    void fpsChanged(float fps);
+    void fpsChanged(double fps);
     void videoSaved(QString name);
 
 private:
@@ -54,10 +54,10 @@ private:
 
     // FPS calculating
     bool fps_calculating;
-    float fps;
+    double fps;
 
     // video saving
-    int frame_width, frame_height;
+    double frame_width, frame_height;
     VideoSavingStatus video_saving_status;
     QString saved_video_name;
     cv::VideoWriter *video_writer;

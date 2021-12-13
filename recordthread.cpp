@@ -31,13 +31,13 @@ RecordThread::~RecordThread(){
 void RecordThread::run(){
     running = true;
     cv::VideoCapture cap(cameraID);
-    // cv::VideoCapture cap("/home/kdr2/Videos/WIN_20190123_20_14_56_Pro.mp4");
+    //cv::VideoCapture cap("/home/kdr2/Videos/WIN_20190123_20_14_56_Pro.mp4");
     cv::Mat tmp_frame;
 
     frame_width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
     frame_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
 
-    segmentor = cv::createBackgroundSubtractorMOG2(500, 16, true);
+    //segmentor = cv::createBackgroundSubtractorMOG2(500, 16, true);
 
     while(running){
         cap >> tmp_frame;
@@ -58,9 +58,9 @@ void RecordThread::run(){
         }
 
         cvtColor(tmp_frame, tmp_frame, cv::COLOR_BGR2RGB);
-        data_lock->lock();
+        //data_lock->lock();
         frame = tmp_frame;
-        data_lock->unlock();
+        //data_lock->unlock();
         emit frameCaptured(&frame);
         if(fps_calculating) {
             calculateFPS(cap);
@@ -94,8 +94,7 @@ void RecordThread::startSavingVideo(cv::Mat &firstFrame){
     video_writer = new cv::VideoWriter(
         Utilities::getSavedVideoPath(saved_video_name, "avi").toStdString(),
         cv::VideoWriter::fourcc('M','J','P','G'),
-        fps? fps: 30,
-        cv::Size(frame_width,frame_height));
+        fps? fps: 7 , cv::Size(frame_width,frame_height));
     video_saving_status = STARTED;
 }
 
